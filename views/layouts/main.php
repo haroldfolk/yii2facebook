@@ -21,8 +21,8 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body
-    background="https://lh6.googleusercontent.com/-Jm5Sj590T44/AAAAAAAAAAI/AAAAAAAAAAA/NN_TyECl_IA/s128-c-k/photo.jpg">
+<body>
+
 <?php $this->beginBody() ?>
 
 <div class="wrap">
