@@ -23,7 +23,7 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
+<img src="https://lh6.googleusercontent.com/-Jm5Sj590T44/AAAAAAAAAAI/AAAAAAAAAAA/NN_TyECl_IA/s128-c-k/photo.jpg" alt="">
 <div class="wrap">
     <?php
     NavBar::begin([
