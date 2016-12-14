@@ -47,6 +47,11 @@ $config = [
             ],
         ],
         */
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+        ],
     ],
     'params' => $params,
 ];
