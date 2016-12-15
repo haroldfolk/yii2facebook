@@ -5,10 +5,13 @@ namespace app\models;
 class User extends \yii\base\Object implements \yii\web\IdentityInterface
 {
     public $id;
+    public $nombres;
+    public $apellidos;
     public $username;
+    public $url;
+    public $fecha_creacion, $fecha_nacimiento, $sexo;
     public $password;
-    public $authKey;
-    public $accessToken;
+
 
     private static $users = [
         '100' => [
@@ -33,7 +36,9 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        //select * from Usuarios where id=$id
+        $u = Usuarios::find()->where(['id' => $id])->one();
+        return isset($u) ? new static($u) : null;
     }
 
     /**
@@ -58,10 +63,18 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+//        foreach (self::$users as $user) {
+//            if (strcasecmp($user['username'], $username) === 0) {
+//                return new static($user);
+//            }
+//        }
+        $usuarioDB = Usuarios::find()->where(['username' => $username])->one();
+        if (isset($usuarioDB)) {
+            $usuarioLogueado = new User();
+            $usuarioLogueado->username = $usuarioDB->username;
+            $usuarioLogueado->password = $usuarioDB->password;
+            $usuarioLogueado->id = $usuarioDB->id;
+            return $usuarioLogueado;
         }
 
         return null;

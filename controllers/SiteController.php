@@ -122,4 +122,9 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionBuscar()
+    {
+        return $this->render('buscar', ['mivariable' => " esta es una variable"]);
+    }
 }
