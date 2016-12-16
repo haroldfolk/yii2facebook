@@ -1,9 +1,23 @@
 <?php
 /* @var $this yii\web\View */
-?>
-<h1>inicio/buscar-personas</h1>
+use app\models\Usuarios;
+use yii\grid\GridView;
+use yii\helpers\BaseHtml;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\widgets\ListView;
+use yii\data\ActiveDataProvider;
+use yii\widgets\Pjax;
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+?>
+    <form action="buscar-personas">
+        <input type="text" name="param">
+        <br><br>
+        <input type="submit" value="Buscar Personas">
+    </form>
+<?php
+
+
+echo GridView::widget([
+    'dataProvider' => $dataProvider,
+]);

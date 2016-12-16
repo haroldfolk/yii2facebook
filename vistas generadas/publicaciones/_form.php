@@ -16,8 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'contenido')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fecha_inicio')->textInput(['maxlength' => true]) ?>
-
 
 
     <?php

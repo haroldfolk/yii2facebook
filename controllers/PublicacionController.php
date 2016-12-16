@@ -34,7 +34,7 @@ class PublicacionController extends \yii\web\Controller
     public function actionBorrarPublicacion($id)
     {
         $model = $this->findModel($id);
-        $model->fecha_fin = date("Y-m-d H:i:s");;
+        $model->fecha_fin = date("Y-m-d H:i:s");
         $model->save();
         return $this->goBack();
     }
@@ -116,7 +116,7 @@ class PublicacionController extends \yii\web\Controller
 
         $model = new Publicaciones();
         $model->autor_id = Yii::$app->user->getId();
-        $model->fecha_inicio =
+        $model->fecha_inicio = date("Y-m-d H:i:s");
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

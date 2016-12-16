@@ -11,6 +11,7 @@ foreach ($noticias as $noticia)
         'attributes' => [
             'titulo',                                           // title attribute (in plain text)
             'contenido',                                // description attribute formatted as HTML
-
+            'fecha_inicio',
+            'autor_id'
         ],
     ]);
