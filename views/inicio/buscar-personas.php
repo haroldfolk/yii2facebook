@@ -1,23 +1,36 @@
 <?php
-/* @var $this yii\web\View */
-use app\models\Usuarios;
+
 use yii\grid\GridView;
-use yii\helpers\BaseHtml;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\widgets\ListView;
-use yii\data\ActiveDataProvider;
-use yii\widgets\Pjax;
+
 
 ?>
-    <form action="buscar-personas">
-        <input type="text" name="param">
-        <br><br>
-        <input type="submit" value="Buscar Personas">
-    </form>
+    <form action="buscar-personas" class="form-inline">
+        <input type="text" name="param" class="form-control">
+        <input type="submit" value="Buscar Personas" class="btn btn-primary">
+    </form><br>
 <?php
 
 
 echo GridView::widget([
     'dataProvider' => $dataProvider,
+    'columns' => [
+        'id',
+        'nombres',
+        'apellidos',
+        'sexo',
+        'username',
+        ['class' => 'yii\grid\ActionColumn',
+            'template' => '{agregar}',
+            'buttons' => [
+                'agregar' => function ($url) {
+                    return Html::a('<span class="glyphicon glyphicon-plus"></span>', $url, [
+                        'title' => Yii::t('yii', 'Create'),
+                    ]);
+
+                }
+            ]
+        ],
+    ],
+
 ]);

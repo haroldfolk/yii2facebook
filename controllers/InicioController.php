@@ -10,10 +10,11 @@ use yii\data\ActiveDataProvider;
 
 class InicioController extends \yii\web\Controller
 {
-    public function actionBuscarPersonas($param)
+    public function actionBuscarPersonas($param = "")
     {
         $activeQuery = Usuarios::find();
-        $activeQuery->filterWhere(['like', 'nombres', $param])->orFilterWhere(['like', 'apellidos', $param]);
+        $activeQuery->filterWhere(['ilike', 'nombres', $param])->orFilterWhere(['ilike', 'apellidos', $param]);
+//            ->orFilterWhere(['ilike', 'username', $param]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $activeQuery,

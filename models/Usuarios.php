@@ -56,7 +56,7 @@ class Usuarios extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'ID Usuario',
             'nombres' => 'Nombres',
             'apellidos' => 'Apellidos',
             'username' => 'Username(Correo electronico)',
