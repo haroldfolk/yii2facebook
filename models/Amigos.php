@@ -126,4 +126,20 @@ class Amigos extends \yii\db\ActiveRecord
         $data[] = $id;
         return $data;
     }
+
+    public function listaIDsAmigosSinYo($id)
+    {
+        $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->orWhere(['receptor_id' => $id, 'esta_aceptado' => true])->all();
+        $data = array();
+        foreach ($laAmistad as $amigo) {
+
+            if ($amigo->emisor_id == $id) {
+                $data[] = $amigo->receptor_id;
+            } else {
+                $data[] = $amigo->emisor_id;
+            }
+        }
+
+        return $data;
+    }
 }

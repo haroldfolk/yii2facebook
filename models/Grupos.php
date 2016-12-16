@@ -66,4 +66,17 @@ class Grupos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::className(), ['id' => 'participante_id']);
     }
+
+    public function devolverConversacion($id, $id2)
+    {
+        $listaDeCvs = Grupos::find()->select('conversacion_id')->where(['participante_id' => $id])->all();
+        $listaDeCVentre = Grupos::find()->where(['participante_id' => $id2, 'conversacion_id' => $listaDeCvs])->all();
+        foreach ($listaDeCVentre as $laCV) {
+            $contadorDeParticipante = Grupos::find()->where(['conversacion_id' => $laCV->conversacion_id])->all();
+            if (count($contadorDeParticipante) == 2) {
+                return $laCV->conversacion_id;
+            }
+        }
+        return 0;
+    }
 }

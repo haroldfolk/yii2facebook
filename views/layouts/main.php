@@ -36,10 +36,33 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
 
+            [
+                'label' => 'Inicio',
+                'items' => [
+                    ['label' => Html::encode(' Ver Noticias'), 'url' => ['/inicio/ver-noticias']],
+                    ['label' => Html::encode(' Buscar Personas'), 'url' => ['/inicio/buscar-personas']],
+                ],
+            ],
+            [
+                'label' => 'Perfil',
+                'items' => [
+                    ['label' => Html::encode(' Ver Perfil'), 'url' => ['/perfil/ver-perfil', 'id' => Yii::$app->user->id]],
+                    ['label' => Html::encode(' Editar Perfil'), 'url' => ['/perfil/editar-perfil']],
+                ],
+            ],
+            [
+                'label' => 'Contactos',
+                'items' => [
+                    ['label' => Html::encode(' Buscar en Contactos'), 'url' => ['/contactos/buscar-contacto']],
+                    ['label' => Html::encode('Ver solicitudes'), 'url' => ['/contactos/listar-solicitudes']],
+                    ['label' => Html::encode(' Ver Contactos'), 'url' => ['/contactos/listar-contactos']],
+                ],
+            ],
+
+            [
+                'label' => 'Mensajes', 'url' => ['/mensaje/enviar-inbox']
+            ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

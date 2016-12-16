@@ -34,8 +34,10 @@ class PublicacionController extends \yii\web\Controller
     public function actionBorrarPublicacion($id)
     {
         $model = $this->findModel($id);
+        if ($model->autor_id == Yii::$app->user->id) {
         $model->fecha_fin = date("Y-m-d H:i:s");
         $model->save();
+        }
         return $this->goBack();
     }
 
@@ -60,15 +62,13 @@ class PublicacionController extends \yii\web\Controller
         }
         throw new NotFoundHttpException('Esta publicacion es un usuario que no es tu amigo aun.');
     }
-//    public function actionEditarComentario()
-//    {
-//        return $this->render('editar-comentario');
-//    }
+
 
     public function actionEditarComentario($id)
     {
-        $model = Comentarios::findOne(['id' => $id]);
 
+        $model = Comentarios::findOne(['id' => $id]);
+        if ($model->usuario_id == Yii::$app->user->id) {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack();
@@ -77,19 +77,23 @@ class PublicacionController extends \yii\web\Controller
                 'model' => $model,
             ]);
         }
+        }
+        return $this->goBack();
     }
 
     public function actionEditarPublicacion($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->autor_id == Yii::$app->user->id) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
+        return $this->goBack();
     }
 
     public function actionRealizarComentario($idPub)
@@ -99,8 +103,8 @@ class PublicacionController extends \yii\web\Controller
         $laPub = $this->findModel($idPub);
         if ($laPub->autor_id == $idLOG || $relacion->sonAmigos($laPub->autor_id, Yii::$app->user->id)) {
 
-        }
-        $model = new Comentarios();
+
+            $model = new Comentarios();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack();
@@ -109,6 +113,8 @@ class PublicacionController extends \yii\web\Controller
                 'model' => $model,
             ]);
         }
+        }
+        return $this->goBack();
     }
 
     public function actionRealizarPublicacion()

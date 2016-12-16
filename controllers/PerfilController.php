@@ -9,9 +9,10 @@ use yii\web\NotFoundHttpException;
 class PerfilController extends \yii\web\Controller
 {
 
-    public function actionEditarPerfil($id)
+    public function actionEditarPerfil()
     {
-        $model = $this->findModel($id);
+
+        $model = $this->findModel(Yii::$app->user->id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->goBack();

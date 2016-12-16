@@ -69,8 +69,8 @@ class ContactosController extends \yii\web\Controller
     {
         $idLOG = Yii::$app->user->id;
         $amigos = new Amigos();
-        $amigos = $amigos->listaIDsAmigos($idLOG);
-        $activeQuery = Usuarios::find($amigos);
+        $amigos = $amigos->listaIDsAmigosSinYo($idLOG);
+        $activeQuery = Usuarios::find()->where(['id' => $amigos]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $activeQuery,

@@ -28,7 +28,7 @@ class Conversaciones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ,
+
         ];
     }
 
