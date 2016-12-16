@@ -2,6 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Amigos;
+use app\models\Publicaciones;
+use Yii;
+
 class InicioController extends \yii\web\Controller
 {
     public function actionBuscarPersonas()
@@ -11,7 +15,11 @@ class InicioController extends \yii\web\Controller
 
     public function actionVerNoticias()
     {
-        return $this->render('ver-noticias');
+        $amigosID = new Amigos();
+        $amigosID = $amigosID->listaIDsAmigos(Yii::$app->user->id);
+        $noticias = Publicaciones::findAll(['autor_id' => $amigosID]);
+        return $this->render('ver-noticias', ['noticias' => $noticias]);
+
     }
 
 }

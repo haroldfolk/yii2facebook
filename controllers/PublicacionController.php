@@ -7,10 +7,29 @@ use app\models\Comentarios;
 use app\models\Likes;
 use app\models\Publicaciones;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 class PublicacionController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['borrar-publicacion', 'dar-like', 'editar-comentario', 'editar-publicacion', 'realizar-comentario', 'realizar-publicacion', 'ver-publicacion'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['borrar-publicacion', 'dar-like', 'editar-comentario', 'editar-publicacion', 'realizar-comentario', 'realizar-publicacion', 'ver-publicacion'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
+        ];
+    }
 
     public function actionBorrarPublicacion($id)
     {
@@ -34,9 +53,12 @@ class PublicacionController extends \yii\web\Controller
             if (!$like->save()) {
                 $like = Likes::findOne(['publicacion_id' => $idPub, 'usuario_id' => $idLOG]);
                 $like->delete();
+
             }
+            return $this->goBack();
             //no return nada porque solo ejecuta la accion de like y dislike
         }
+        throw new NotFoundHttpException('Esta publicacion es un usuario que no es tu amigo aun.');
     }
 //    public function actionEditarComentario()
 //    {
@@ -93,11 +115,12 @@ class PublicacionController extends \yii\web\Controller
     {
 
         $model = new Publicaciones();
-
+        $model->autor_id = Yii::$app->user->getId();
+        $model->fecha_inicio =
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $model->autor_id = Yii::$app->user->getId();
+
             return $this->render('create', [
                 'model' => $model,
             ]);

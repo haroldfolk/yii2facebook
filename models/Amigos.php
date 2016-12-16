@@ -123,7 +123,7 @@ class Amigos extends \yii\db\ActiveRecord
                 $data[] = $amigo->emisor_id;
             }
         }
-
+        $data[] = $id;
         return $data;
     }
 }
