@@ -13,16 +13,14 @@ use yii\helpers\Html;
         <input type="submit" value="Enviar Mensaje" class="btn btn-primary">
     </form><br>
 <?php } ?>
-<?php
 
-?>
 <div class="row">
 
     <?php
 
     if ($dataProvider != null){
     ?>
-    <div class="col-xs-12 col-sm-6 col-md-8"><?php
+    <div class="col-xs-12 col-sm-6 col-md-6"><?php
         echo GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
@@ -32,14 +30,15 @@ use yii\helpers\Html;
                     'attribute' => 'contenido',
                     'value' => function ($model) {
                         if ($model->usuario_id == Yii::$app->user->id) {
-                            return "<blockquote class='blockquote-reverse'>Yo:" . $model->contenido . "</blockquote>";
+                            return "<p align='right'><span class=\"label label-success\" >Yo:</span>" . $model->contenido . "</p>";
                         } else {
                             $usuario = Usuarios::findOne(['id' => $model->usuario_id]);
-                            return "<blockquote>" . $usuario->nombres . ":" . $model->contenido . "</blockquote>";
+                            return "<p ><span class=\"label label-warning\" >" . $usuario->nombres . ":</span>" . $model->contenido . "</p>";
                         }
 
                     },
                     'format' => 'html'
+
                 ]
 
 
@@ -49,7 +48,7 @@ use yii\helpers\Html;
         }
         ?>    </div>
 
-    <div class="col-xs-6 col-md-4">
+    <div class="col-xs-6 col-md-6">
         <?php
         if ($dataProvider2 != null) {
             echo "<h3>Lista de amigos</h3>";
@@ -63,7 +62,7 @@ use yii\helpers\Html;
                         'template' => '{enviar-inbox}',
                         'buttons' => [
                             'enviar-inbox' => function ($url) {
-                                return Html::a('<span class="glyphicon glyphicon-envelope"></span>', $url, [
+                                return Html::a('<button><span class="glyphicon glyphicon-envelope"> </span>Enviar Mensaje</button>', $url, [
                                     'title' => 'Enviar un mensaje',
                                 ]);
 

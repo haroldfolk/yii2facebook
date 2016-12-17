@@ -39,8 +39,8 @@ class ContactosController extends \yii\web\Controller
         $listaDeAmigos = new Amigos();
         $listaDeAmigos = $listaDeAmigos->listaIDSAmigos(Yii::$app->user->id);
 
-        $activeQuery = Usuarios::find($listaDeAmigos);
-        $activeQuery->filterWhere(['ilike', 'nombres', $param])->orFilterWhere(['ilike', 'apellidos', $param]);
+        $activeQuery = Usuarios::find()->where(['id' => $listaDeAmigos]);
+        $activeQuery->andFilterWhere(['ilike', 'nombres', $param])->orFilterWhere(['ilike', 'apellidos', $param]);
         $dataProvider = new ActiveDataProvider([
             'query' => $activeQuery,
         ]);

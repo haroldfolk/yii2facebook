@@ -15,7 +15,7 @@ class PerfilController extends \yii\web\Controller
         $model = $this->findModel(Yii::$app->user->id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->goBack();
+            return $this->redirect(['/perfil/ver-perfil', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
