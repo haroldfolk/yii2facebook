@@ -61,6 +61,8 @@ class ContactosController extends \yii\web\Controller
         $relacion->emisor_id = $idLOG;
         $relacion->receptor_id = $id;
         $relacion->esta_aceptado = false;
+        $relacion->apodo_emisor = '';
+        $relacion->apodo_receptor = '';
         $relacion->save();
         return $this->redirect(['/perfil/ver-perfil', 'id' => $id]);
     }
