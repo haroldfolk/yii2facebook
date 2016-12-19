@@ -49,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     <?php if ($model->id == Yii::$app->user->id) {
+        echo Html::a('Realizar Publicacion', ['/publicacion/realizar-publicacion'], ['class' => 'btn btn-success']) . "  ";
         echo Html::a('Buscar Contactos', ['/contactos/buscar-contacto'], ['class' => 'btn btn-default']) . "  ";
         echo Html::a('Ver lista de contactos', ['/contactos/listar-contactos'], ['class' => 'btn btn-default']) . "  ";
         echo Html::a('Ver solicitudes de amistad pendientes', ['/contactos/listar-solicitudes'], ['class' => 'btn btn-default']) . "  ";

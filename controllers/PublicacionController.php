@@ -6,7 +6,9 @@ use app\models\Amigos;
 use app\models\Comentarios;
 use app\models\Likes;
 use app\models\Publicaciones;
+use app\models\Usuarios;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -42,25 +44,35 @@ class PublicacionController extends \yii\web\Controller
     }
 
     //
-    public function actionDarLike($idPub)
+    public function actionDarLike($id)
     {
         $idLOG = Yii::$app->user->id;
+
+
         $like = new Likes();
 
-        $laPub = $this->findModel($idPub);
+        $laPub = $this->findModel($id);
         $relacion = new Amigos();
         if ($laPub->autor_id == $idLOG || $relacion->sonAmigos($laPub->autor_id, Yii::$app->user->id)) {
-            $like->publicacion_id = $idPub;
             $like->usuario_id = $idLOG;
-            if (!$like->save()) {
-                $like = Likes::findOne(['publicacion_id' => $idPub, 'usuario_id' => $idLOG]);
-                $like->delete();
+            $like->publicacion_id = $id;
 
+
+            $like1 = Likes::findOne(['usuario_id' => $idLOG, 'publicacion_id' => $id]);
+//            print_r($like1);
+//            exit();
+            if ($like1 == null) {
+                $like->save();
+            } else {
+//                print_r("entro al else");
+//            exit();
+//                $like->delete();
             }
-            return $this->goBack();
+
+            return $this->redirect(['ver-publicacion', 'id' => $id]);
             //no return nada porque solo ejecuta la accion de like y dislike
         }
-        throw new NotFoundHttpException('Esta publicacion es un usuario que no es tu amigo aun.');
+        throw new NotFoundHttpException('Esta publicacion es de un usuario que no es tu amigo aun.');
     }
 
 
@@ -78,7 +90,7 @@ class PublicacionController extends \yii\web\Controller
             ]);
         }
         }
-        return $this->goBack();
+        return $this->redirect(['ver-publicacion', 'id' => $id]);
     }
 
     public function actionEditarPublicacion($id)
@@ -86,7 +98,7 @@ class PublicacionController extends \yii\web\Controller
         $model = $this->findModel($id);
         if ($model->autor_id == Yii::$app->user->id) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['ver-publicacion', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -124,7 +136,7 @@ class PublicacionController extends \yii\web\Controller
         $model->autor_id = Yii::$app->user->getId();
         $model->fecha_inicio = date("Y-m-d H:i:s");
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['ver-publicacion', 'id' => $model->id]);
         } else {
 
             return $this->render('create', [
@@ -136,9 +148,33 @@ class PublicacionController extends \yii\web\Controller
 
     public function actionVerPublicacion($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $idLog = Yii::$app->user->id;
+        $pub = $this->findModel($id);
+        $coments = Comentarios::find()->where(['publicacion_id' => $id]);
+        $dataComentarios = new ActiveDataProvider([
+            'query' => $coments,
+            'pagination' => [
+                'pageSize' => 5,
+            ]
         ]);
+        $likes = Likes::find()->select('usuario_id')->where(['publicacion_id' => $id]);
+        $usuariosLikes = Usuarios::find()->where(['id' => $likes]);
+        $dataLikes = new ActiveDataProvider([
+            'query' => $usuariosLikes,
+            'pagination' => [
+                'pageSize' => 5,
+            ]
+        ]);
+
+        if ($pub->autor_id == $idLog) {
+            return $this->render('view', [
+                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes
+            ]);
+        } else {
+            return $this->render('viewVisita', [
+                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes
+            ]);
+        }
     }
 
 
