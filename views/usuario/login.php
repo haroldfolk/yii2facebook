@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
     <div class="col-lg-offset-1" style="color:#999;">
-        <?= Html::a('Registrarse', '/usuario/registrar', ['class' => 'btn btn-warning', 'name' => 'login-button']) ?>
+        <?= Html::a('Editar Publicacion', ['/publicacion/editar-publicacion', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a('Registrarse', ['registrar'], ['class' => 'btn btn-warning']) ?>
     </div>
 </div>
