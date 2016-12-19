@@ -51,7 +51,7 @@ class ContactosController extends \yii\web\Controller
         ]);
     }
 
-    public function actionEnviarSolicitud($idUsuario)
+    public function actionEnviarSolicitud($id)
     {
         $idLOG = Yii::$app->user->id;
         $relacion = new Amigos();
@@ -59,10 +59,10 @@ class ContactosController extends \yii\web\Controller
 //            return;//ya existe la solicitud pendiente
 //        }
         $relacion->emisor_id = $idLOG;
-        $relacion->receptor_id = $idUsuario;
+        $relacion->receptor_id = $id;
         $relacion->esta_aceptado = false;
-        $relacion->save;
-        return $this->redirect(['/perfil/ver', 'id' => $idUsuario]);
+        $relacion->save();
+        return $this->redirect(['/perfil/ver-perfil', 'id' => $id]);
     }
 
     public function actionListarContactos()

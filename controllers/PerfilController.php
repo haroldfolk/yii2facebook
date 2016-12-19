@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Amigos;
 use app\models\Usuarios;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -26,8 +27,13 @@ class PerfilController extends \yii\web\Controller
     public function actionVerPerfil($id)
     {
         $model = $this->findModel($id);
+        $sonAmigos = new Amigos();
+        $pendiente = false;
+        if ($sonAmigos->solicitudPendiente($id, Yii::$app->user->id)) {
+            $pendiente = true;
+        }
         return $this->render('view', [
-            'model' => $model,
+            'model' => $model, 'pendiente' => $pendiente
         ]);
     }
 

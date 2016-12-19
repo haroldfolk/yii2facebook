@@ -12,7 +12,10 @@ class InicioController extends \yii\web\Controller
 {
     public function actionBuscarPersonas($param = "")
     {
-        $activeQuery = Usuarios::find();
+        $lista = new Amigos();
+        $lista = $lista->listaIDsAmigos(Yii::$app->user->id);
+
+        $activeQuery = Usuarios::find()->where(['not in', 'id', $lista]);
         $activeQuery->filterWhere(['ilike', 'nombres', $param])->orFilterWhere(['ilike', 'apellidos', $param]);
 //            ->orFilterWhere(['ilike', 'username', $param]);
 

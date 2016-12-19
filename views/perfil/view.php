@@ -15,7 +15,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['perfil/editar-perfil', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php
+        if ($model->id == Yii::$app->user->id) {
+            echo Html::a('Actualizar', ['perfil/editar-perfil', 'id' => $model->id], ['class' => 'btn btn-primary']);
+        } else {
+            if ($pendiente) {
+                echo Html::button('Solicitud de Amistad ya enviada', ['class' => 'btn btn-danger']);
+            } else {
+                echo Html::a('Enviar solicitud de Amistad', ['contactos/enviar-solicitud', 'id' => $model->id], ['class' => 'btn btn-success']);
+            }
+
+        }
+        ?>
+
         <?= Html::a('Ir a Inicio', ['/inicio/ver-noticias'], ['class' => 'btn btn-warning']) ?>
 
     </p>
@@ -34,5 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'sexo',
         ],
     ]) ?>
-
+    <?php if ($model->id == Yii::$app->user->id) {
+        echo Html::a('Buscar Contactos', ['/contactos/buscar-contacto'], ['class' => 'btn btn-default']) . "  ";
+        echo Html::a('Ver lista de contactos', ['/contactos/listar-contactos'], ['class' => 'btn btn-default']) . "  ";
+        echo Html::a('Ver solicitudes de amistad pendientes', ['/contactos/listar-solicitudes'], ['class' => 'btn btn-default']) . "  ";
+    } ?>
 </div>
