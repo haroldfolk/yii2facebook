@@ -21,11 +21,11 @@ echo GridView::widget([
         'sexo',
         'username',
         ['class' => 'yii\grid\ActionColumn',
-            'template' => '{agregar}',
+            'template' => '{/perfil/ver-perfil}',
             'buttons' => [
-                'agregar' => function ($url) {
-                    return Html::a('<span class="glyphicon glyphicon-plus"></span>', $url, [
-                        'title' => Yii::t('yii', 'Create'),
+                '/perfil/ver-perfil' => function ($url) {
+                    return Html::a('<span class="glyphicon glyphicon-plus" > VerPerfil</span>', $url, [
+                        'title' => Yii::t('yii', 'Ver perfil de usuario'), 'class' => 'btn btn-primary'
                     ]);
 
                 }

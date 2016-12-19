@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -54,4 +55,19 @@ $this->params['breadcrumbs'][] = $this->title;
         echo Html::a('Ver lista de contactos', ['/contactos/listar-contactos'], ['class' => 'btn btn-default']) . "  ";
         echo Html::a('Ver solicitudes de amistad pendientes', ['/contactos/listar-solicitudes'], ['class' => 'btn btn-default']) . "  ";
     } ?>
+    <?php echo ListView::widget([
+
+        'dataProvider' => $dataProvider,
+
+
+        'itemOptions' => ['class' => 'item'],
+
+        'itemView' => function ($model, $key, $index, $widget) {
+
+            return $this->render('/publicacion/viewNoticias', ['model' => $model]) . "<br><br>";
+
+        },
+
+    ]); ?>
+
 </div>

@@ -46,6 +46,12 @@ $this->title = $model->titulo;
                 }
             },
         ]); ?>
+        <form action="realizar-comentario" class="form-inline">
+            <input type="text" name="param" class="form-control">
+            <input type="hidden" name="id" class="form-control" value="<?= $model->id ?>">
+            <input type="submit" value="Realizar comentario" class="btn btn-primary">
+        </form>
+        <br>
     </div>
     <div class="col-xs-4 col-sm-6">
         <h3><strong>Likes</strong></h3>

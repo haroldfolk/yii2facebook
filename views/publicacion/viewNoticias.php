@@ -26,6 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <button class="btn btn-default">#Comentarios:<span class="badge"><?= $model->getComentarios()->count() ?></span>
         </button>
         <button class="btn btn-default">#Likes:<span class="badge"><?= $model->getLikes()->count() ?></span></button>
-
+        
     </div>
 <?= "<br>" . Html::a('Ver publicacion Completa', ['/publicacion/ver-publicacion', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

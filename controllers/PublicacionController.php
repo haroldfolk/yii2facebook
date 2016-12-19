@@ -108,25 +108,24 @@ class PublicacionController extends \yii\web\Controller
         return $this->goBack();
     }
 
-    public function actionRealizarComentario($idPub)
+    public function actionRealizarComentario($id, $param)
     {
         $relacion = new Amigos();
         $idLOG = Yii::$app->user->id;
-        $laPub = $this->findModel($idPub);
+        $laPub = $this->findModel($id);
+        if ($param == null) {
+            return $this->redirect(['ver-publicacion', 'id' => $id]);
+        }
         if ($laPub->autor_id == $idLOG || $relacion->sonAmigos($laPub->autor_id, Yii::$app->user->id)) {
 
 
             $model = new Comentarios();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->goBack();
-        } else {
-            return $this->render('createcoment', [
-                'model' => $model,
-            ]);
+            $model->usuario_id = $idLOG;
+            $model->contenido = $param;
+            $model->publicacion_id = $id;
+            $model->save();
         }
-        }
-        return $this->goBack();
+        return $this->redirect(['ver-publicacion', 'id' => $id]);
     }
 
     public function actionRealizarPublicacion()
@@ -154,7 +153,7 @@ class PublicacionController extends \yii\web\Controller
         $dataComentarios = new ActiveDataProvider([
             'query' => $coments,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 3,
             ]
         ]);
         $likes = Likes::find()->select('usuario_id')->where(['publicacion_id' => $id]);
@@ -162,7 +161,7 @@ class PublicacionController extends \yii\web\Controller
         $dataLikes = new ActiveDataProvider([
             'query' => $usuariosLikes,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 10,
             ]
         ]);
 

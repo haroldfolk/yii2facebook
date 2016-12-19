@@ -3,8 +3,10 @@
 namespace app\controllers;
 
 use app\models\Amigos;
+use app\models\Publicaciones;
 use app\models\Usuarios;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
 class PerfilController extends \yii\web\Controller
@@ -35,8 +37,11 @@ class PerfilController extends \yii\web\Controller
         if ($sonAmigos->sonAmigos($id, Yii::$app->user->id)) {
             $pendiente = -1;
         }
+        $dataProvider = new ActiveDataProvider([
+            'query' => Publicaciones::find()->where(['autor_id' => Yii::$app->user->id])->orderBy(['fecha_inicio' => SORT_DESC]),
+        ]);
         return $this->render('view', [
-            'model' => $model, 'pendiente' => $pendiente
+            'model' => $model, 'pendiente' => $pendiente, 'dataProvider' => $dataProvider
         ]);
     }
 
