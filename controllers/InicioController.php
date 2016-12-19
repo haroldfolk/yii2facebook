@@ -33,8 +33,9 @@ class InicioController extends \yii\web\Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Publicaciones::find()->where(['autor_id' => $amigosID])->andWhere(['fecha_fin' => null])->orderBy(['fecha_inicio' => SORT_DESC]),
         ]);
-        $noticias = Publicaciones::find()->where(['autor_id' => $amigosID])->orderBy(['fecha_inicio' => SORT_DESC])->all();
-        return $this->render('ver-noticias', ['noticias' => $noticias, 'dataProvider' => $dataProvider]);
+//        $noticias = Publicaciones::find()->where(['autor_id' => $amigosID])->orderBy(['fecha_inicio' => SORT_DESC])->all();
+        return $this->render('ver-noticias', [/*'noticias' => $noticias,*/
+            'dataProvider' => $dataProvider]);
 
     }
 

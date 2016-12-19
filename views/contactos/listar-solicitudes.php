@@ -28,7 +28,7 @@ echo GridView::widget([
             'buttons' => [
                 '/contactos/rechazar-solicitud' => function ($url) {
 
-                    return Html::a('<span class="glyphicon glyphicon-ok">Aceptar Solicitud</span>', $url, [
+                    return Html::a('<span class="glyphicon glyphicon-remove">Rechazar Solicitud</span>', $url, [
                         'title' => 'Aceptar',
                     ]);
 

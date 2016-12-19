@@ -101,6 +101,16 @@ class Amigos extends \yii\db\ActiveRecord
         return false;
     }
 
+    public function solicitudPendienteIda($id1, $id2)
+    {
+        $laAmistad = Amigos::find()->where(['emisor_id' => $id1, 'receptor_id' => $id2])->one();
+
+        if (isset($laAmistad)) {
+            return !$laAmistad->esta_aceptado;
+
+        }
+        return false;
+    }
     public function listaDeAmigos($id)
     {
         $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->orWhere(['receptor_id' => $id, 'esta_aceptado' => true]);
