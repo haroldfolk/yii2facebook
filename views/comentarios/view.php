@@ -17,6 +17,6 @@ use yii\widgets\DetailView;
         <?= Usuarios::findOne(['id' => $model->usuario_id])->nombres . " " . Usuarios::findOne(['id' => $model->usuario_id])->apellidos ?>
 
         <?= Html::a('Editar Comentario', ['/publicacion/editar-comentario', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Borrar comentario', ['/publicacion/borrar-comentario', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
+
     </footer>
 </blockquote>

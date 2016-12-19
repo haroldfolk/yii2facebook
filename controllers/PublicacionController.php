@@ -40,7 +40,7 @@ class PublicacionController extends \yii\web\Controller
         $model->fecha_fin = date("Y-m-d H:i:s");
         $model->save();
         }
-        return $this->goBack();
+        return $this->redirect(['/inicio/ver-noticias']);
     }
 
     //
@@ -83,7 +83,7 @@ class PublicacionController extends \yii\web\Controller
         if ($model->usuario_id == Yii::$app->user->id) {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->goBack();
+            return $this->redirect(['ver-publicacion', 'id' => $id]);
         } else {
             return $this->render('updatecoment', [
                 'model' => $model,

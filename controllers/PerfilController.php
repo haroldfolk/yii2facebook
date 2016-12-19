@@ -26,9 +26,14 @@ class PerfilController extends \yii\web\Controller
         }
     }
 
-    public function actionVerPerfil($id)
+    public function actionVerPerfil($id = null)
     {
-        $model = $this->findModel($id);
+        if ($id == null) {
+            $model = $this->findModel(Yii::$app->user->id);
+        } else {
+            $model = $this->findModel($id);
+        }
+
         $sonAmigos = new Amigos();
         $pendiente = 0;
         if ($sonAmigos->solicitudPendiente($id, Yii::$app->user->id)) {
@@ -38,7 +43,7 @@ class PerfilController extends \yii\web\Controller
             $pendiente = -1;
         }
         $dataProvider = new ActiveDataProvider([
-            'query' => Publicaciones::find()->where(['autor_id' => Yii::$app->user->id])->orderBy(['fecha_inicio' => SORT_DESC]),
+            'query' => Publicaciones::find()->where(['autor_id' => $model->id])->orderBy(['fecha_inicio' => SORT_DESC]),
         ]);
         return $this->render('view', [
             'model' => $model, 'pendiente' => $pendiente, 'dataProvider' => $dataProvider

@@ -23,6 +23,18 @@ echo GridView::widget([
                 }
             ]
         ],
+        ['class' => 'yii\grid\ActionColumn',
+            'template' => '{/contactos/rechazar-solicitud}',
+            'buttons' => [
+                '/contactos/rechazar-solicitud' => function ($url) {
+
+                    return Html::a('<span class="glyphicon glyphicon-ok">Aceptar Solicitud</span>', $url, [
+                        'title' => 'Aceptar',
+                    ]);
+
+                }
+            ]
+        ],
     ],
 
 ]);
