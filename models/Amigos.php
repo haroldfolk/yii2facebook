@@ -100,7 +100,6 @@ class Amigos extends \yii\db\ActiveRecord
         }
         return false;
     }
-
     public function solicitudPendienteIda($id1, $id2)
     {
         $laAmistad = Amigos::find()->where(['emisor_id' => $id1, 'receptor_id' => $id2])->one();
@@ -137,6 +136,21 @@ class Amigos extends \yii\db\ActiveRecord
         return $data;
     }
 
+    public function listaIDsAmigos2($id)
+    {
+        $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->andWhere(['receptor_id' => $id, 'esta_aceptado' => true])->all();
+        $data = [];
+        foreach ($laAmistad as $amigo) {
+            $data = array();
+            if ($amigo->emisor_id == $id) {
+                $data[] = $amigo->receptor_id;
+            } else {
+                $data[] = $amigo->emisor_id;
+            }
+        }
+        $data[] = $id;
+        return $data;
+    }
     public function listaIDsAmigosSinYo($id)
     {
         $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->orWhere(['receptor_id' => $id, 'esta_aceptado' => true])->all();

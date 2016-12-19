@@ -36,15 +36,14 @@ class PerfilController extends \yii\web\Controller
 
         $sonAmigos = new Amigos();
         $pendiente = 0;
-        if ($sonAmigos->solicitudPendienteIda($id, Yii::$app->user->id)) {
-            $pendiente = 1;
-        }
-        if ($sonAmigos->solicitudPendienteIda(Yii::$app->user->id, $id)) {
-            $pendiente = 2;
-        }
         if ($sonAmigos->sonAmigos($id, Yii::$app->user->id)) {
             $pendiente = -1;
+        } else if ($sonAmigos->solicitudPendienteIda(Yii::$app->user->id, $id)) {
+            $pendiente = 1;
+        } else if ($sonAmigos->solicitudPendienteIda($id, Yii::$app->user->id)) {
+            $pendiente = 2;
         }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Publicaciones::find()->where(['autor_id' => $model->id, 'fecha_fin' => null])->orderBy(['fecha_inicio' => SORT_DESC]),
         ]);
