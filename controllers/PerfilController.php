@@ -43,7 +43,7 @@ class PerfilController extends \yii\web\Controller
             $pendiente = -1;
         }
         $dataProvider = new ActiveDataProvider([
-            'query' => Publicaciones::find()->where(['autor_id' => $model->id])->orderBy(['fecha_inicio' => SORT_DESC]),
+            'query' => Publicaciones::find()->where(['autor_id' => $model->id, 'fecha_fin' => null])->orderBy(['fecha_inicio' => SORT_DESC]),
         ]);
         return $this->render('view', [
             'model' => $model, 'pendiente' => $pendiente, 'dataProvider' => $dataProvider

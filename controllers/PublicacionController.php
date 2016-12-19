@@ -134,6 +134,7 @@ class PublicacionController extends \yii\web\Controller
         $model = new Publicaciones();
         $model->autor_id = Yii::$app->user->getId();
         $model->fecha_inicio = date("Y-m-d H:i:s");
+        $model->fecha_fin = null;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['ver-publicacion', 'id' => $model->id]);
         } else {
