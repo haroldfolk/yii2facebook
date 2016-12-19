@@ -138,7 +138,7 @@ class Amigos extends \yii\db\ActiveRecord
 
     public function listaIDsAmigos2($id)
     {
-        $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->andWhere(['receptor_id' => $id, 'esta_aceptado' => true])->all();
+        $laAmistad = Amigos::find()->where(['emisor_id' => $id, 'esta_aceptado' => true])->orWhere(['receptor_id' => $id, 'esta_aceptado' => true])->all();
         $data = array();
         foreach ($laAmistad as $amigo) {
 
