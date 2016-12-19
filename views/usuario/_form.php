@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model2, 'imageFile')->fileInput(['accept' => 'image/*']) ?>
 
     <?= $form->field($model, 'fecha_nacimiento')->widget(DatePicker::classname(), [
         'language' => 'es',

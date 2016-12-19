@@ -9,6 +9,12 @@ $config = [
     'language' => 'es',
     'bootstrap' => ['log'],
     'components' => [
+        'storage' => [
+            'class' => '\jovanialferez\yii2s3\AmazonS3',
+            'key' => 'AKIAJSKG6ZA2TV76IOPA',
+            'secret' => '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',
+            'bucket' => 'fotowebhd',
+        ],
          'request' => [
         'enableCookieValidation' => true,
         'enableCsrfValidation' => true,

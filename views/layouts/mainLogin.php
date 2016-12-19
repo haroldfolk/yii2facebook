@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>MiniFacebook',
+        'brandLabel' => 'MiniFacebook',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,32 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
 
-            [
-                'label' => 'Inicio',
-                'items' => [
-                    ['label' => Html::encode(' Ver Noticias'), 'url' => ['/inicio/ver-noticias']],
-                    ['label' => Html::encode(' Buscar Personas'), 'url' => ['/inicio/buscar-personas']],
-                ],
-            ],
-            [
-                'label' => 'Perfil',
-                'items' => [
-                    ['label' => Html::encode(' Ver Perfil'), 'url' => ['/perfil/ver-perfil', 'id' => Yii::$app->user->id]],
-                    ['label' => Html::encode(' Editar Perfil'), 'url' => ['/perfil/editar-perfil']],
-                ],
-            ],
-            [
-                'label' => 'Contactos',
-                'items' => [
-                    ['label' => Html::encode(' Buscar en Contactos'), 'url' => ['/contactos/buscar-contacto']],
-                    ['label' => Html::encode('Ver solicitudes'), 'url' => ['/contactos/listar-solicitudes']],
-                    ['label' => Html::encode(' Ver Contactos'), 'url' => ['/contactos/listar-contactos']],
-                ],
-            ],
 
-            [
-                'label' => 'Mensajes', 'url' => ['/mensaje/enviar-inbox']
-            ],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/usuario/login']]
             ) : (
