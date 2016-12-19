@@ -28,9 +28,12 @@ class PerfilController extends \yii\web\Controller
     {
         $model = $this->findModel($id);
         $sonAmigos = new Amigos();
-        $pendiente = false;
+        $pendiente = 0;
         if ($sonAmigos->solicitudPendiente($id, Yii::$app->user->id)) {
-            $pendiente = true;
+            $pendiente = 1;
+        }
+        if ($sonAmigos->sonAmigos($id, Yii::$app->user->id)) {
+            $pendiente = -1;
         }
         return $this->render('view', [
             'model' => $model, 'pendiente' => $pendiente

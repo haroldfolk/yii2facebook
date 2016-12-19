@@ -19,9 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
         if ($model->id == Yii::$app->user->id) {
             echo Html::a('Actualizar', ['perfil/editar-perfil', 'id' => $model->id], ['class' => 'btn btn-primary']);
         } else {
-            if ($pendiente) {
+            if ($pendiente == 1) {
                 echo Html::button('Solicitud de Amistad ya enviada', ['class' => 'btn btn-danger']);
-            } else {
+            } else if ($pendiente == 0) {
+                echo Html::a('Enviar solicitud de Amistad', ['contactos/enviar-solicitud', 'id' => $model->id], ['class' => 'btn btn-success']);
+            } else if ($pendiente == -1) {
                 echo Html::a('Enviar solicitud de Amistad', ['contactos/enviar-solicitud', 'id' => $model->id], ['class' => 'btn btn-success']);
             }
 
