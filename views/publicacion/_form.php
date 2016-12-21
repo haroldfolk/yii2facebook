@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'contenido')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model2, 'imageFile')->fileInput(['accept' => 'image/*']) ?>
     <?= $form->field($model, 'fecha_inicio')->textInput(['maxlength' => true]) ?>
 
 

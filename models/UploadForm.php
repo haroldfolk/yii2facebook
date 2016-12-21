@@ -17,14 +17,14 @@ use yii\web\UploadedFile;
 class UploadForm extends Model
 {
     /**
-     * @var UploadedFile[]
+     * @var UploadedFile
      */
     public $imageFile;
 
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            ['imageFile', 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -34,14 +34,13 @@ class UploadForm extends Model
 
         if ($this->validate()) {
 
-            $path = 'fotos/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
-            $this->imageFile->saveAs($path);
-            $url = $storage->uploadFile($path, "" . date("Ymd") . time() . "");
-
-
-            return true;
+            $uploadedFiles = $this->imageFile;
+            $path = 'fotos/' . $uploadedFiles->baseName . '.' . $uploadedFiles->extension;
+            $uploadedFiles->saveAs($path);
+            $url = $storage->uploadFile($path, "" . date("Ymd") . time() . "faceook");
+            return $url;
         } else {
-            return true;
+            return null;
         }
     }
 

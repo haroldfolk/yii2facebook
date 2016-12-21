@@ -83,9 +83,10 @@ class UsuarioController extends \yii\web\Controller
 //        }
         $model->url = "";
         if ($model->load(Yii::$app->request->post()) && $modelFoto->load(Yii::$app->request->post())) {
-            $modelFoto->imageFile = UploadedFile::getInstances($modelFoto, 'imageFile');
-            if ($modelFoto->upload()) {
-                $model->url = "http://lorempixel.com/400/200";
+            $modelFoto->imageFile = UploadedFile::getInstance($modelFoto, 'imageFile');
+            $upload = $modelFoto->upload();
+            if ($upload != null) {
+                $model->url = $upload;
             }
 
             $model->save();

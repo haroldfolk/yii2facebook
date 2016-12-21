@@ -4,13 +4,16 @@ namespace app\controllers;
 
 use app\models\Amigos;
 use app\models\Comentarios;
+use app\models\Imagenes;
 use app\models\Likes;
 use app\models\Publicaciones;
+use app\models\UploadForm;
 use app\models\Usuarios;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class PublicacionController extends \yii\web\Controller
 {
@@ -135,12 +138,25 @@ class PublicacionController extends \yii\web\Controller
         $model->autor_id = Yii::$app->user->getId();
         $model->fecha_inicio = date("Y-m-d H:i:s");
         $model->fecha_fin = null;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $modelFoto = new UploadForm();
+        if ($model->load(Yii::$app->request->post()) && $modelFoto->load(Yii::$app->request->post())) {
+            $modelFoto->imageFile = UploadedFile::getInstance($modelFoto, 'imageFile');
+            $upload = $modelFoto->upload();
+            $model->save();
+            if ($upload != null) {
+                $img = new Imagenes();
+                $img->url = $upload;
+                $img->publicacion_id = $model->id;
+                $img->save();
+            }
+
+
             return $this->redirect(['ver-publicacion', 'id' => $model->id]);
+
         } else {
 
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model, 'modelFoto' => $modelFoto
             ]);
         }
     }
@@ -165,14 +181,14 @@ class PublicacionController extends \yii\web\Controller
                 'pageSize' => 10,
             ]
         ]);
-
+        $imagen = Imagenes::findOne(['publicacion_id' => $pub->id])->url;
         if ($pub->autor_id == $idLog) {
             return $this->render('view', [
-                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes
+                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes, 'img' => $imagen
             ]);
         } else {
             return $this->render('viewVisita', [
-                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes
+                'model' => $pub, 'dataComentarios' => $dataComentarios, 'dataLikes' => $dataLikes, 'img' => $imagen
             ]);
         }
     }
