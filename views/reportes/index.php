@@ -180,7 +180,7 @@
                         Likes
                     </td>
                     <td>
-                        Nro. de Likes Dados
+                        Nro. de Likes Recibidos
                     </td>
                     <td>
                         <?= $likesRecibidos ?>

@@ -63,6 +63,13 @@ AppAsset::register($this);
             [
                 'label' => 'Mensajes', 'url' => ['/mensaje/enviar-inbox']
             ],
+            [
+                'label' => 'Reportes',
+                'items' => [
+                    ['label' => Html::encode(' Estado de mi actividad'), 'url' => ['/reportes']],
+
+                ],
+            ],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/usuario/login']]
             ) : (

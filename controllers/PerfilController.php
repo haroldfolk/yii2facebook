@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use app\models\Amigos;
 use app\models\Publicaciones;
+use app\models\UploadForm;
 use app\models\Usuarios;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class PerfilController extends \yii\web\Controller
 {
@@ -16,12 +18,19 @@ class PerfilController extends \yii\web\Controller
     {
 
         $model = $this->findModel(Yii::$app->user->id);
+        $modelFoto = new UploadForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $modelFoto->imageFile = UploadedFile::getInstance($modelFoto, 'imageFile');
+            $upload = $modelFoto->upload();
+            if ($upload != null) {
+                $model->url = $upload;
+            }
+            $model->save();
             return $this->redirect(['/perfil/ver-perfil', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model, 'modelFoto' => $modelFoto
             ]);
         }
     }

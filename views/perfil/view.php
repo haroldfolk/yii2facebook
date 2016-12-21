@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Imagenes;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
@@ -36,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Ir a Inicio', ['/inicio/ver-noticias'], ['class' => 'btn btn-warning']) ?>
 
     </p>
-    <img src="<?= $model->url ?>" alt="Imagen">
+    <img src="<?= $model->url ?>" alt="Imagen" height="200" width="200">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -66,8 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'itemOptions' => ['class' => 'item'],
 
         'itemView' => function ($model, $key, $index, $widget) {
-
-            return $this->render('/publicacion/viewNoticias', ['model' => $model]) . "<br><br>";
+            $imagen = Imagenes::findOne(['publicacion_id' => $model->id]);
+            if ($imagen == null) {
+                $imagen = '';
+            } else {
+                $imagen = $imagen->url;
+            }
+            return $this->render('/publicacion/viewNoticias', ['model' => $model, 'img' => $imagen]) . "<br><br>";
 
         },
 
