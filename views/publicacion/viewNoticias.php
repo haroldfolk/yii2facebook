@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?>
             <small>Autor: <?= $autor ?></small>
         </h1>
-
+        <img src="<?= $img ?>" alt="Imagen">
         <p>
             <?= $model->contenido ?>
 

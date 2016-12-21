@@ -26,9 +26,13 @@ use yii\widgets\ListView;
     'itemOptions' => ['class' => 'item'],
 
     'itemView' => function ($model, $key, $index, $widget) {
-
-        return $this->render('/publicacion/viewNoticias', ['model' => $model]) . "<br><br>";
-
+        $img = \app\models\Imagenes::findOne(['publicacion_id' => $model->id]);
+        if ($img == null) {
+            $img = "";
+        } else {
+            $img = $img->url;
+        }
+        return $this->render('/publicacion/viewNoticias', ['model' => $model, 'img' => $img]) . "<br><br>";
     },
 
 ]); ?>

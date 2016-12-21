@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Amigos;
+use app\models\Imagenes;
 use app\models\Publicaciones;
 use app\models\Usuarios;
 use Yii;
@@ -30,9 +31,11 @@ class InicioController extends \yii\web\Controller
     {
         $amigosID = new Amigos();
         $amigosID = $amigosID->listaIDsAmigos2(Yii::$app->user->id);
+        $pus = Publicaciones::find()->where(['autor_id' => $amigosID])->andWhere(['fecha_fin' => null])->orderBy(['fecha_inicio' => SORT_DESC]);
         $dataProvider = new ActiveDataProvider([
-            'query' => Publicaciones::find()->where(['autor_id' => $amigosID])->andWhere(['fecha_fin' => null])->orderBy(['fecha_inicio' => SORT_DESC]),
+            'query' => $pus,
         ]);
+
 //        $noticias = Publicaciones::find()->where(['autor_id' => $amigosID])->orderBy(['fecha_inicio' => SORT_DESC])->all();
         return $this->render('ver-noticias', [/*'noticias' => $noticias,*/
             'dataProvider' => $dataProvider]);
