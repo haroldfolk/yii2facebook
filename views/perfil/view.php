@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Ir a Inicio', ['/inicio/ver-noticias'], ['class' => 'btn btn-warning']) ?>
 
     </p>
-
+    <img src="<?= $model->url ?>" alt="Imagen">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -45,12 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'apellidos',
             'username',
 //            'password',
-            'url:url',
+//            'url:url',
 //            'fecha_creacion',
             'fecha_nacimiento:date',
             'sexo',
         ],
     ]) ?>
+
     <?php if ($model->id == Yii::$app->user->id) {
         echo Html::a('Realizar Publicacion', ['/publicacion/realizar-publicacion'], ['class' => 'btn btn-success']) . "  ";
         echo Html::a('Buscar Contactos', ['/contactos/buscar-contacto'], ['class' => 'btn btn-default']) . "  ";
