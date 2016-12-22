@@ -40,7 +40,7 @@ echo ColumnChart::widget([
         'fontSize' => 12,
         'chartArea' => [
             'left' => '5%',
-            'width' => '50%',
+            'width' => '30%',
             'height' => 350
         ],
         'isStacked' => true,
@@ -85,7 +85,7 @@ echo ColumnChart::widget([
         'fontSize' => 12,
         'chartArea' => [
             'left' => '5%',
-            'width' => '90%',
+            'width' => '20%',
             'height' => 350
         ],
         'tooltip' => [
