@@ -16,10 +16,9 @@ class ReportesController extends \yii\web\Controller
     {
         $amigos = new Amigos();
         $id = Yii::$app->user->id;
-        $amigos = $amigos->listaIDsAmigos($id);
-        $publicacionesIDS = Publicaciones::find()->select('id')->where(['autor_id' => $id])->all();
-
-
+        $amigos = $amigos->listaIDsAmigosSinYo($id);
+        $publicacionesIDS = new Publicaciones();
+        $publicacionesIDS = $publicacionesIDS->getPublicaciones($id);
         $contadorHombres = Usuarios::find()->where(['id' => $amigos, 'sexo' => 'M'])->count();
         $contadorMujeres = Usuarios::find()->where(['id' => $amigos, 'sexo' => 'F'])->count();
         $msgEnviados = Mensajes::find()->where(['usuario_id' => $id])->count();
@@ -32,7 +31,7 @@ class ReportesController extends \yii\web\Controller
         $publicaciones = Publicaciones::find()->where(['autor_id' => $id])->count();
         $comentariosRealizados = Comentarios::find()->where(['usuario_id' => $id])->count();
         $comentariosRecibidos = Comentarios::find()->where(['publicacion_id' => $publicacionesIDS])->count();
-        $LikesRealizados = Comentarios::find()->where(['usuario_id' => $id])->count();
+        $LikesRealizados = Likes::find()->where(['usuario_id' => $id])->count();
         $LikesRecibidos = Likes::find()->where(['publicacion_id' => $publicacionesIDS])->count();
         return $this->render('index', [
             'contadorHombres' => $contadorHombres,

@@ -70,6 +70,13 @@ AppAsset::register($this);
 
                 ],
             ],
+            [
+                'label' => 'Estadisticas',
+                'items' => [
+                    ['label' => Html::encode(' Estadisticas de mi cuenta'), 'url' => ['/estadisticas']],
+
+                ],
+            ],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/usuario/login']]
             ) : (

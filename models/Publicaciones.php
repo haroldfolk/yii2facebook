@@ -81,6 +81,18 @@ class Publicaciones extends \yii\db\ActiveRecord
         return $this->hasMany(Likes::className(), ['publicacion_id' => 'id']);
     }
 
+    public function getPublicaciones($id)
+    {
+
+        $laAmistad = Publicaciones::find()->where(['autor_id' => $id])->all();
+        $data = array();
+        foreach ($laAmistad as $amigo) {
+            $data[] = $amigo->id;
+        }
+
+        return $data;
+
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
